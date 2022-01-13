@@ -23,9 +23,4 @@ public interface UserDao extends UserDetailsService {
 
     public UserDetails loadUserByUsername(String username);
 
-    public boolean saveUser(User user);
-
-    public boolean saveAdmin();
-
-
 }

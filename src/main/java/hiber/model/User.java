@@ -8,7 +8,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "users")
@@ -18,16 +21,14 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "userName")
+    @Column(unique = true)
     @NotEmpty
     @Size(min = 2, message = "Не меньше 5 знаков")
     private String userName;
 
-    @Column(name = "email")
     @Email
     private String email;
 
-    @Column(name = "password")
     @NotEmpty
     @Size(min = 2, message = "Не меньше 5 знаков")
     private String password;
@@ -38,16 +39,17 @@ public class User implements UserDetails {
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
 
-    public User(@NotEmpty @Size(min = 2, message = "Не меньше 5 знаков") String userName, @Email String email, @NotEmpty @Size(min = 2, message = "Не меньше 5 знаков") String password, String passwordConfirm) {
+    public User(@NotEmpty @Size(min = 2, message = "Не меньше 5 знаков") String userName, @Email String email, @NotEmpty @Size(min = 2, message = "Не меньше 5 знаков") String password, String passwordConfirm, Set<Role> roles) {
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.passwordConfirm = passwordConfirm;
+        this.roles = roles;
     }
 
     public Long getId() {

@@ -1,6 +1,6 @@
 package web.controller;
 
-import hiber.service.UserService;
+import hiber.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,51 +14,53 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    private UserService userService;
+    private AppService appService;
 
     @GetMapping("")
     public String allUsers(ModelMap model) {
-        List<User> users = userService.allUsers();
+        List<User> users = appService.allUsers();
         model.addAttribute("users", users);
         return "users";
     }
 
     @GetMapping("/{id}")
     public String getById(ModelMap model, @PathVariable("id") Long id) {
-        User user = userService.getById(id);
+        User user = appService.getById(id);
         model.addAttribute("user", user);
         return "user";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/addddd")
     public String newPerson(ModelMap model) {
         model.addAttribute("user", new User());
+        model.addAttribute("allRoles", appService.getRoles());
         return "add";
     }
 
     @PostMapping(value = "/add")
     public String add(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
+        appService.saveUser(user);
         return "successPage";
     }
 
 
     @GetMapping(value = "/edit/{id}")
     public String edit(ModelMap model, @PathVariable("id") Long id) {
-        User user = userService.getById(id);
+        User user = appService.getById(id);
         model.addAttribute("user", user);
+        model.addAttribute(appService.getRoles());
         return "editUser";
     }
 
     @PostMapping(value = "/edit")
     public String edit(@ModelAttribute("user") User user) {
-        userService.edit(user);
+        appService.edit(user);
         return "successPage";
     }
 
     @GetMapping("/delete")
     public String delete(@RequestParam("id") Long id) {
-        userService.delete(id);
+        appService.delete(id);
         return "successPageDelete";
     }
 

@@ -1,7 +1,8 @@
 package web.controller;
 
+import hiber.model.Role;
 import hiber.model.User;
-import hiber.service.UserService;
+import hiber.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,12 +13,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class RegistrationController {
 
     @Autowired
-    private UserService userService;
+    private AppService appService;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -35,18 +39,21 @@ public class RegistrationController {
             model.addAttribute("passwordError", "Пароли не совпадают");
             return "registration";
         }
-        if (!userService.saveUser(userForm)) {
+        if (!appService.saveUser(userForm)) {
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
             return "registration";
         }
-        userService.saveUser(userForm);
+        appService.saveUser(userForm);
         return "redirect:/";
     }
 
 
     @GetMapping("/createAdmin")
     public ResponseEntity createAdmin() {
-        userService.saveAdmin();
+        List<String> roles = new ArrayList<>();
+        roles.add("ROLE_ADMIN");
+        roles.add("ROLE_USER");
+        appService.saveAdmin(roles);
         return ResponseEntity.ok("Admin created");
     }
 
