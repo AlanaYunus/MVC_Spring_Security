@@ -16,7 +16,7 @@ public class Role implements GrantedAuthority {
     @Column (unique = true)
     private String roleName;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
     private Set<User> users;
 
     public Role() {
@@ -54,4 +54,10 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return getRoleName();
     }
+
+    @Override
+    public String toString() {
+        return getRoleName() + " ";
+    }
 }
+

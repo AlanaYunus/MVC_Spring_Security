@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +45,8 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void edit(User user) {
+        refresh(user);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.edit(user);
     }
 

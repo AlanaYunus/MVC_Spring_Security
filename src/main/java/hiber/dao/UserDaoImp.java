@@ -50,7 +50,6 @@ public class UserDaoImp implements UserDao {
     @Override
     public void edit(User user) {
         entityManager.merge(user);
-
     }
 
     @Override

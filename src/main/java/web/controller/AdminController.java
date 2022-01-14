@@ -20,7 +20,6 @@ public class AdminController {
     @Autowired
     private RoleService roleService;
 
-
     @GetMapping("")
     public String allUsers(ModelMap model) {
         List<User> users = userService.allUsers();

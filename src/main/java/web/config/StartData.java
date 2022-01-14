@@ -37,11 +37,11 @@ public class StartData {
         userService.saveUser(admin);
 
         User normalUser = new User();
-        normalUser.setUserName("user");
+        normalUser.setUserName("bob");
         normalUser.setPassword("1234");
         Set<Role> roleSetUser = new HashSet<>();
         roleSetUser.add(roleService.getById(2L));
-        admin.setRoles(roleSetUser);
+        normalUser.setRoles(roleSetUser);
 
         userService.saveUser(normalUser);
     }

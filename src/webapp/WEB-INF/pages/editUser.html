@@ -24,6 +24,18 @@
                 <label th:for="password">Password</label>
                 <input type="password" name="password" th:id="password" th:value="${user.getPassword()}"><br/>
             </p>
+
+            <p>
+                <label>Roles:
+                    <input type="checkbox" name="roles"
+                           th:each="role : ${allRoles}"
+                           th:text="${role.roleName}"
+                           th:value="${role.roleName}"
+                           th:field="*{roles}"
+                    />
+                </label>
+            </p>
+
         </fieldset>
         <form th:action="@{admin/edit/{id}(id=${user.id})}" th:object="${user}">
             <button type="submit">Изменить данные</button>

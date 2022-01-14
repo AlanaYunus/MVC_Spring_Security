@@ -18,8 +18,8 @@
             </tr>
         </table>
         <br/>
-        <form th:action="@{/index}">
-            <button type="submit">Назад на главную страницу</button>
+        <form>
+            <input type="button" value="Назад на главную страницу" onclick="history.back()">
         </form>
         <a href="javascript: document.logoutForm.submit()" role="menuitem"> Выйти</a>
 

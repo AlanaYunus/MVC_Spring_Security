@@ -8,15 +8,8 @@
 <body>
 <h2>Добро пожаловать!</h2>
 <br/>
-<form th:action="@{/login}">
-    <button type="submit" class="btn btn-outline-danger">Войти</button>
-</form>
-
-<!--<a href="javascript: document.loginForm.submit()" role="menuitem"> Войти</a>-->
-<!--<form name="loginForm" th:action="@{/login}" method="post">-->
-<!--    <input type = "submit" value="Sign In"/>-->
-<!--</form>-->
-
-</form>
+<ul>
+    <li><a href="/login" th:href="@{/login}">Войти</a></li>
+</ul>
 </body>
 </html>
