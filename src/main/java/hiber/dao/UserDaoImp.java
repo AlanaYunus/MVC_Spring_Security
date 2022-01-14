@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+
 @Repository
 public class UserDaoImp implements UserDao {
 
@@ -64,7 +65,13 @@ public class UserDaoImp implements UserDao {
         TypedQuery<User> q = entityManager.createQuery
                 ("select u from User u where u.userName = :userName", User.class);
         q.setParameter("userName", userName);
-        return q.getSingleResult();
+        User result = null;
+        try {
+            result = q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return result;
     }
 
 }

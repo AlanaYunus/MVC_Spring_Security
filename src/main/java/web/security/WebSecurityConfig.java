@@ -1,6 +1,6 @@
 package web.security;
 
-import hiber.service.AppService;
+import hiber.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -16,12 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    AppService appService;
+    UserService appService;
 
     @Autowired
     SuccessUserHandler successUserHandler;
 
-    public WebSecurityConfig(@Qualifier("appServiceImp") AppService appService, SuccessUserHandler successUserHandler) {
+    public WebSecurityConfig(@Qualifier("userServiceImp") UserService appService, SuccessUserHandler successUserHandler) {
         this.appService = appService;
         this.successUserHandler = successUserHandler;
     }
@@ -61,4 +61,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(appService).passwordEncoder(bCryptPasswordEncoder());
     }
+
 }

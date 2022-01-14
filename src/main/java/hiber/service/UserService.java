@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface AppService extends UserDetailsService {
+public interface UserService extends UserDetailsService {
     List<User> allUsers();
 
     void add(User user);
@@ -22,8 +22,5 @@ public interface AppService extends UserDetailsService {
 
     public boolean saveUser(User user);
 
-    public boolean saveAdmin(List<String> roles);
-
-    public List<Role> getRoles();
 
 }

@@ -2,10 +2,11 @@ package hiber.dao;
 
 import hiber.model.Role;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -21,23 +22,25 @@ public class RoleDaoImp implements RoleDao{
     }
 
     @Override
-    public List<Role> findByRolename(List <String> roleNames) {
+    public void add(Role role) {
+        entityManager.merge(role);
+    }
 
-        List<Role> roles = new ArrayList<>();
+    @Override
+    public Role getById(Long id) {
+        return entityManager.find(Role.class, id);
+    }
 
-        for (String roleName : roleNames) {
-            List<Role> found = entityManager.createQuery("select r from Role r where r.roleName = :roleName", Role.class)
-                        .setParameter("roleName", roleName).getResultList();
-                if (found.isEmpty()) {
-                    Role role = new Role(roleName);
-                    entityManager.persist(role);
-                    roles.add(role);
-                } else {
-                    roles.addAll(found);
-                }
-            }
-           return roles;
+    @Transactional
+    @Override
+    public Role findByRolename(String roleName) {
+        TypedQuery<Role> q = entityManager.createQuery
+                ("select r from Role r where r.roleName = :roleName", Role.class);
+        q.setParameter("roleName", roleName);
+        return q.getSingleResult();
         }
+
+
     }
 
 
